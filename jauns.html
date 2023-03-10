@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gaidot dzimšanas dienu</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="css/jauns.css" />
+    </head>
+    <body>
+        
+        <h1>Gaidot dzimšanas dienu..</h1>
+        
+        <hr />
+        
+        <form>
+            
+            <p>Ievadi pilnu datumu, kad Tev būs tuvākā dzimšanas diena</p>
+            
+            <div>
+                <label for="gads">Gads</label>
+                <input id="gads" name="gads" type="text" placeholder="2023" value="" />
+            </div>
+            
+            <div>
+                <label for="menesis">Mēnesis</label>
+                <input id="menesis" name="menesis" type="text" placeholder="12" value="" />
+            </div>
+            
+            <div>
+                <label for="diena">Datums</label>
+                <input id="diena" name="datums" type="text" placeholder="24" value="" />
+            </div>
+
+           <input type="button" title="poga" value="Aprēķināt dienu skaitu līdz dzimšanas dienai" onclick="daysLeft()">
+           
+           <p>
+               Līdz svētkiem atlikušas
+               <input id="dienas" name="dienas" type="text" value="" />
+               dienas :)) 
+           </p>
+        </form>
+        
+        
+      <script>
+            let daysLeft = function() {
+                let today = new Date();
+                let oneDay = 24 * 60 * 60 * 1000;
+                
+                let year = document.getElementById("gads").value,
+                    month = document.getElementById("menesis").value,
+                    day = document.getElementById("diena").value;
+            
+                    year = parseFloat(year);
+                    month = parseFloat(month);
+                    day = parseFloat(day);
+            
+                let birthdayDate = new Date(year, month - 1, day, 12);
+               
+                let age = today.getFullYear() - birthdayDate.getFullYear();
+                
+                let upcomingBirthdayDay = new Date(birthdayDate.getFullYear(), birthdayDate.getMonth(), birthdayDate.getDate());
+              
+                    if(today > upcomingBirthdayDay) {
+                        document.getElementById("dienas").value = "Tuvākā dzimšanas diena nevar būt no pagātnes";
+                        return;
+                    }
+                
+                let daysLeft = Math.ceil((upcomingBirthdayDay.getTime() - today.getTime()) / (oneDay));
+                
+                    if (daysLeft && age < 200) {
+                        document.getElementById("dienas").value = daysLeft;
+                    } else {
+                        document.getElementById("dienas").value = "Tuvākā dzimšanas diena nevar būt vairāk par 199 gadiem.";
+                    }
+            };
+        </script>
+    </body>
+</html>
